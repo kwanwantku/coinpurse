@@ -64,13 +64,33 @@ public class CoinUtil {
 	 */
 	public static void sumByCurrency(List<Coin> coins) {
 		
-		List<Coin> tempcoinlist = new ArrayList<Coin>();
-		sortByCurrency(coins);
-		for(int i=0;i<coins.size();i++){
-			
-			
-		}
-		
+        if (coins == null || coins.size() == 0) return;
+        
+      
+        List<Coin> sorted = new ArrayList<Coin>();
+        for (Coin c : coins) sorted.add(c);
+        
+        sortByCurrency(sorted);
+        
+        String nowCurrency = sorted.get(0).getCurrency();
+        double sum = 0;
+       
+        for (Coin c : sorted) {
+            
+           
+            if (!c.getCurrency().equals(nowCurrency)) {                
+                
+                System.out.println(sum + " " + nowCurrency);
+                sum = 0;
+                nowCurrency = c.getCurrency();
+            }
+            
+         
+            sum += c.getValue();
+        }
+        
+        System.out.println(sum + " " + nowCurrency);
+
 	}
 	
 	/**
