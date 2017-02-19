@@ -15,9 +15,11 @@ import java.util.ArrayList;
  *  @author Kwanwan Tantichartkul
  *  @version 1.0
  */
+
 public class Purse {
+	
     /** Collection of objects in the purse. */
-	 private List<Coin> money;
+	 private List<Valuable> money;
     
     /** Capacity is maximum number of coins the purse can hold.
      *  Capacity is set when the purse is created and cannot be changed.
@@ -31,7 +33,7 @@ public class Purse {
     public Purse( int capacity ) {
 
     	this.capacity = capacity;
-    	this.money = new ArrayList<Coin>();
+    	this.money = new ArrayList<Valuable>();
     	
     }
 
@@ -88,10 +90,10 @@ public class Purse {
      * @param coin is a Coin object to insert into purse
      * @return true if coin inserted, false if can't insert
      */
-    public boolean insert( Coin coin ) {
-    	if(isFull() || coin.getValue() == 0)
+    public boolean insert( Valuable valuable) {
+    	if(isFull() || valuable.getValue() == 0)
     		return false;
-    	money.add(coin);
+    	money.add(valuable);
     	return true;
     }
     
@@ -103,13 +105,13 @@ public class Purse {
      *  @return array of Coin objects for money withdrawn, 
 	 *          or null if cannot withdraw requested amount.
      */
-    public Coin[] withdraw( double amount ) {
+    public Valuable[] withdraw( double amount ) {
 
 		if (this.getBalance() < amount) {
 			return null;
 		}
 		
-		ArrayList<Coin> tempmoney = new ArrayList<Coin>();
+		ArrayList<Valuable> tempmoney = new ArrayList<Valuable>();
 		Collections.sort(money);
 		Collections.reverse(money);
 		int i = 0;
@@ -132,7 +134,7 @@ public class Purse {
 		if(amount>0)
 			return null;
 
-		Coin [] array = new Coin[ tempmoney.size() ];
+		Valuable [] array = new Valuable[ tempmoney.size() ];
 		tempmoney.toArray(array);
 		return array;
 	}
@@ -148,5 +150,4 @@ public class Purse {
     }
 
 }
-//TODO remove the TODO comments after you complete them.
-//TODO When you are finished, there should not be any TODO. Including this one.
+

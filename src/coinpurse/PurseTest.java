@@ -50,8 +50,29 @@ public class PurseTest {
         assertTrue( purse.insert(coin3));
         assertTrue( purse.insert(coin2));
         assertEquals( 3, purse.count() );
+        
         // purse is full so insert should fail
         assertFalse( purse.insert(new Coin(1)) );
+    }
+    
+    @Test
+    public void testInsert2()
+    {
+    	Purse purse = new Purse(5);
+    	BankNote banknote1 = new BankNote(1000);
+    	BankNote banknote2 = new BankNote(500);
+    	BankNote banknote3 = new BankNote(20);
+    	Coin coin4 = new Coin(5);
+        Coin coin5 = new Coin(1);
+    	assertTrue(purse.insert(banknote1));
+    	assertTrue(purse.insert(banknote2));
+    	assertTrue(purse.insert(banknote3));
+    	assertTrue(purse.insert(coin4));
+    	assertTrue(purse.insert(coin5));
+    	
+    	// purse is full so insert should fail
+        assertFalse( purse.insert(new Coin(2)) );
+    	
     }
     
 
@@ -62,6 +83,14 @@ public class PurseTest {
         Purse purse = new Purse(3);
         Coin fakeCoin = new Coin(0);
         assertFalse( purse.insert(fakeCoin));
+    }
+    /** Insert should reject bank notes with no value. */
+    @Test
+    public void testInsertNoValue2()
+    {
+    	Purse purse = new Purse(2);
+    	BankNote fakeBanknote = new BankNote(0);
+    	assertFalse( purse.insert(fakeBanknote));
     }
 
 
@@ -96,21 +125,39 @@ public class PurseTest {
 		assertTrue( purse.insert(coin) ); // should be allowed
 		assertTrue( purse.insert(coin) ); // should be allowed
 	}
+	
 
 	@Test
 	public void testEasyWithdraw() {
 		Purse purse = new Purse(10);
 		int [] values = {1, 10, 1000};
-		for(int value : values) {
-			Coin coin = new Coin(value);
-			assertTrue(purse.insert(coin));
+		for(int value : values){
+			Valuable valuable = new Coin(value);
+			assertTrue(purse.insert(valuable));
 			assertEquals(value,  purse.getBalance(), TOL);
-			Coin [] result = purse.withdraw(value);
+			Valuable [] result = purse.withdraw(value);
 			assertTrue( result != null );
 			assertEquals( 1, result.length );
-			assertSame(  coin, result[0] );
+			assertSame(  valuable, result[0] );
 			assertEquals( 0, purse.getBalance(), TOL );
 		}
+	}
+	
+	@Test
+	public void testEasyWithdraw2() {
+		Purse purse = new Purse(10);
+		int [] values = {50, 100, 1000};
+		for(int value : values){
+			Valuable valuable = new BankNote(value);
+			assertTrue(purse.insert(valuable));
+			assertEquals(value,  purse.getBalance(), TOL);
+			Valuable [] result = purse.withdraw(value);
+			assertTrue( result != null );
+			assertEquals( 1, result.length );
+			assertSame(  valuable, result[0] );
+			assertEquals( 0, purse.getBalance(), TOL );
+		}
+		
 	}
 
 	@Test
@@ -129,10 +176,10 @@ public class PurseTest {
 		}
 		assertEquals(amount1+amount2, purse.getBalance(), TOL );
 		assertEquals(10, purse.count() );
-		Coin [] wd1 = purse.withdraw(amount1);
+		Valuable [] wd1 = purse.withdraw(amount1);
 		assertEquals(amount1, sumValue(wd1), 0.0000001 );
 		assertEquals(amount2, purse.getBalance(), TOL );
-		Coin [] wd2 = purse.withdraw(amount2);
+		Valuable [] wd2 = purse.withdraw(amount2);
 		assertEquals(0, purse.getBalance(), TOL );
 	}
 
@@ -148,15 +195,29 @@ public class PurseTest {
 		assertNull( purse.withdraw(30) );
 	}
 	
+	@Test
+	public void testGetBalance() {
+		Purse purse = new Purse(3);
+    	BankNote banknote2 = new BankNote(500);
+    	BankNote banknote3 = new BankNote(20);
+    	Coin coin4 = new Coin(5);
+        assertTrue(purse.insert(banknote2));
+    	assertTrue(purse.insert(banknote3));
+    	assertTrue(purse.insert(coin4));
+    	
+    	assertEquals(banknote2.getValue()+banknote3.getValue()+coin4.getValue(), purse.getBalance(), TOL );
+		
+	}
+	
 	/**
 	 * Sum the value of some coins.
-	 * @param coins array of coins
+	 * @param wd1 array of coins
 	 * @return sum of values of the coins
 	 */
-	private double sumValue(Coin [] coins)  {
-		if (coins == null) return 0;
+	private double sumValue(Valuable[] wd1)  {
+		if (wd1 == null) return 0;
 		double sum = 0;
-		for(Coin c: coins) if (c != null) sum += c.getValue();
+		for(Valuable c: wd1) if (c != null) sum += c.getValue();
 		return sum;
 	}
 	

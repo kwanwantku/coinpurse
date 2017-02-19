@@ -1,11 +1,12 @@
 package coinpurse;
-//TODO fix this Javadoc. It should be written as a COMPLETE SENTENCE WITH PERIOD.
+
 /**
  * a coin with a monetary value and currency
  * @author Kwanwan Tantichartkul
  * @version 1.0
  */
-public class Coin implements Comparable<Coin> {
+public class Coin implements Valuable {
+	/** The default currency of the coin. */
 	public static final String DEFAULT_CURRENCY = "Baht";
     /** Value of the coin. */
     private final double value;
@@ -93,11 +94,11 @@ public class Coin implements Comparable<Coin> {
      * @return the order of coins that come before and after.
      */    
 
-    public int compareTo(Coin o) {
+    public int compareTo(Valuable o) {
     	
-    	if(this.value<o.value)
+    	if(this.value<o.getValue())
     		return -1;
-    	if(this.value>o.value)
+    	if(this.value>o.getValue())
     		return +1;
     	return 0;
     }

@@ -56,10 +56,19 @@ public class ConsoleDialog {
         Scanner scanline = new Scanner(inline);
         while( scanline.hasNextDouble() ) {
             double value = scanline.nextDouble();
-            Coin coin = new Coin(value);
-            System.out.printf("Deposit %s... ", coin.toString() );
-            boolean ok = purse.insert(coin);
-            System.out.println( (ok? "ok" : "FAILED") );
+            if ( value<20 ) {
+            	Coin coin = new Coin(value);
+            	System.out.printf("Deposit %s... ", coin.toString() );
+            	boolean ok = purse.insert(coin);
+            	System.out.println( (ok? "ok" : "FAILED") );
+            }
+            else {
+            	BankNote banknote = new BankNote(value);
+            	System.out.printf("Deposit %s... ", banknote.toString() );
+            	boolean ok = purse.insert(banknote);
+            	System.out.println( (ok? "ok" : "FAILED") );	
+            }
+          
         }
         if ( scanline.hasNext() )
             System.out.println("Invalid input: "+scanline.next() );
@@ -72,13 +81,13 @@ public class ConsoleDialog {
         System.out.print("How much to withdraw? ");
         if ( console.hasNextDouble() ) {
              double amount = console.nextDouble( );
-             Coin [] coins = purse.withdraw(amount);
-             if ( coins == null ) 
+             Valuable [] valuable = purse.withdraw(amount);
+             if ( valuable == null ) 
                 System.out.printf("Sorry, couldn't withdraw %g %s\n", amount, CURRENCY);
              else {
                 System.out.print("You withdrew:");
-                for(int k=0; k<coins.length; k++) {
-                	System.out.print(" " + coins[k].toString() );
+                for(int k=0; k<valuable.length; k++) {
+                	System.out.print(" " + valuable[k].toString() );
                 }
                 System.out.println();
             }
