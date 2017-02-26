@@ -46,7 +46,7 @@ public class ConsoleDialog {
         System.out.println("Goodbye. The purse still has "+purse.getBalance()+" "+CURRENCY);
     }
 
-    /** Ask the user how many coins to deposit into purse, then deposit them.
+    /** Ask the user how many valuables to deposit into purse, then deposit them.
      *  Show result of success or failure.
      */
     public void depositDialog() {
@@ -72,7 +72,7 @@ public class ConsoleDialog {
     }
     
     /** Ask how much money (Baht) to withdraw and then do it.
-     *  After withdraw, show the values of the coins we withdrew.
+     *  After withdraw, show the values of the valuable we withdrew.
      */
     public void withdrawDialog() {
         System.out.print("How much to withdraw? ");

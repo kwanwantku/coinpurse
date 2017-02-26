@@ -1,5 +1,14 @@
 package coinpurse;
 
+
+/**
+ * The class abstract the type of money with the same attributes of each type.
+ * It's can tell the character of each banknote and coin.
+ * It's contain value and currency of each type of money.
+ * It's can sort and compare the money too.
+ * @author pranger54
+ * @version 1.0
+ */
 public class AbstractValuable implements Valuable {
 	
 	/** Value of the coin. */
@@ -11,11 +20,17 @@ public class AbstractValuable implements Valuable {
     	this.value = value;
     	this.currency = currency;
     }
-	
+    /**
+	 * The value of each banknotes and coins.
+	 * @return the value of each banknotes or coins.
+	 */
 	public double getValue() {
 		return this.value;
 	}
-
+    /**
+	 * The currency of each banknotes and coins.
+	 * @return the currency of each banknotes or coins.
+	 */
 	
 	public String getCurrency() {
 		return this.currency;

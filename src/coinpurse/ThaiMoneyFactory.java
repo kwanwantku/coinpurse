@@ -1,13 +1,27 @@
 package coinpurse;
-
+/**
+ * The factory that create Thailand money.
+ * They can create own serial number and initialize the value of money.
+ * @author pranger54
+ * @version 1.0
+ */
 public class ThaiMoneyFactory extends MoneyFactory {
 	 
 	private long serialnumber;
 	
+	/**
+	 * The constructor for Thailand money factory.
+	 * It's initialize the serialnumber.
+	 */
 	protected ThaiMoneyFactory(){
 		this.serialnumber = 1000000;
 	}
-	
+	/**
+	 * Create the Thailand money to made their own serial number for banknote.
+	 * It's can create their own serial number for banknote.
+	 * @param the value of money in the real money.
+	 * @throws IllegalException if their can't create money.
+	 */
 	public Valuable createMoney(double value) {
 		if (value == 0.25) return new Coin(0.25,"Baht");
 		else if (value == 0.5) return new Coin(0.5,"Baht");

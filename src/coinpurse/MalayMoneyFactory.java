@@ -1,13 +1,27 @@
 package coinpurse;
-
+/**
+ * The factory that create Malaysia money.
+ * They can create own serial number and initialize the value of money.
+ * @author pranger54
+ * @version 1.0
+ */
 public class MalayMoneyFactory extends MoneyFactory{
 	 
 	private long serialnumber;
 	
+	/**
+	 * The constructor for Malaysia money factory.
+	 * It's initialize the serialnumber.
+	 */
 	protected MalayMoneyFactory(){
 		this.serialnumber = 1000000;
 	}
-	
+	/**
+	 * Create the Malaysia money to made in factory with each value and currency.
+	 * It's can create their own serial number for bnaknote.
+	 * @param the value of money in the real money.
+	 * @throws IllegalException if their can't create money.
+	 */
 	public Valuable createMoney(double value) {
 		
 		

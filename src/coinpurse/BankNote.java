@@ -12,6 +12,7 @@ public class BankNote extends AbstractValuable  {
 	
     /**
      * A bank note with given value and currency.
+     * It can't to create fake banknote.
      * @param value
      * @param currency
      */
