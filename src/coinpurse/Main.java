@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Arrays;
+import java.util.ResourceBundle;
 
 
 /**
@@ -19,11 +20,9 @@ public class Main {
      * @param args not used
      */
     public static void main( String[] args ) {
-
-    	Purse purse = new Purse(CAPACITY);
-
-    	ConsoleDialog ui = new ConsoleDialog(purse);
-
+    	
+    
+    	ConsoleDialog ui = new ConsoleDialog(new Purse(20));
     	ui.run();
 		
 

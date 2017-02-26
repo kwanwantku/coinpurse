@@ -93,6 +93,7 @@ public class Purse {
     public boolean insert( Valuable valuable) {
     	if(isFull() || valuable.getValue() == 0)
     		return false;
+    		
     	money.add(valuable);
     	return true;
     }

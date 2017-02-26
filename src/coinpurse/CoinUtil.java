@@ -131,7 +131,7 @@ public class CoinUtil {
 			if(value<20)
 				list.add(new Coin(value,currency));
 			else
-				list.add(new BankNote(value,currency));
+				list.add(new BankNote(value,currency,1000000));
 		}
 		return list;
 	}

@@ -43,27 +43,27 @@ public class PurseTest {
     public void testInsert()
     {
         Purse purse = new Purse(3);
-        Coin coin1 = new Coin(5);
-        Coin coin2 = new Coin(10);
-        Coin coin3 = new Coin(1);
+        Coin coin1 = new Coin(5,"Baht");
+        Coin coin2 = new Coin(10,"Baht");
+        Coin coin3 = new Coin(1,"Baht");
         assertTrue( purse.insert(coin1));
         assertTrue( purse.insert(coin3));
         assertTrue( purse.insert(coin2));
         assertEquals( 3, purse.count() );
         
         // purse is full so insert should fail
-        assertFalse( purse.insert(new Coin(1)) );
+        assertFalse( purse.insert(new Coin(1,"Baht")) );
     }
     
     @Test
     public void testInsert2()
     {
     	Purse purse = new Purse(5);
-    	BankNote banknote1 = new BankNote(1000);
-    	BankNote banknote2 = new BankNote(500);
-    	BankNote banknote3 = new BankNote(20);
-    	Coin coin4 = new Coin(5);
-        Coin coin5 = new Coin(1);
+    	BankNote banknote1 = new BankNote(1000,"Baht",1000000);
+    	BankNote banknote2 = new BankNote(500,"Baht",1000000);
+    	BankNote banknote3 = new BankNote(20,"Baht",1000000);
+    	Coin coin4 = new Coin(5,"Baht");
+        Coin coin5 = new Coin(1,"Baht");
     	assertTrue(purse.insert(banknote1));
     	assertTrue(purse.insert(banknote2));
     	assertTrue(purse.insert(banknote3));
@@ -71,7 +71,7 @@ public class PurseTest {
     	assertTrue(purse.insert(coin5));
     	
     	// purse is full so insert should fail
-        assertFalse( purse.insert(new Coin(2)) );
+        assertFalse( purse.insert(new Coin(2,"Baht")) );
     	
     }
     
@@ -81,7 +81,7 @@ public class PurseTest {
     public void testInsertNoValue()
     {
         Purse purse = new Purse(3);
-        Coin fakeCoin = new Coin(0);
+        Coin fakeCoin = new Coin(0,"Baht");
         assertFalse( purse.insert(fakeCoin));
     }
     /** Insert should reject bank notes with no value. */
@@ -89,7 +89,7 @@ public class PurseTest {
     public void testInsertNoValue2()
     {
     	Purse purse = new Purse(2);
-    	BankNote fakeBanknote = new BankNote(0);
+    	BankNote fakeBanknote = new BankNote(0,"Baht",1000000);
     	assertFalse( purse.insert(fakeBanknote));
     }
 
@@ -99,18 +99,18 @@ public class PurseTest {
     {   // borderline case (capacity 1)
         Purse purse = new Purse(1);
         assertFalse( purse.isFull() );
-        purse.insert( new Coin(1) );
+        purse.insert( new Coin(10,"Baht") );
         assertTrue( purse.isFull() );
         // real test
         int capacity = 4;
         purse = new Purse(capacity);
         for(int k=1; k<=capacity; k++) {
             assertFalse(purse.isFull());
-            purse.insert( new Coin(k) );
+            purse.insert( new Coin(k,"Baht") );
         }
         // full now
         assertTrue( purse.isFull() );
-        assertFalse( purse.insert( new Coin(5) ) );
+        assertFalse( purse.insert( new Coin(5,"Baht") ) );
     }
 
 	/** Should be able to insert same coin many times,
@@ -120,7 +120,7 @@ public class PurseTest {
 	public void testInsertSameCoin()
 	{
 		Purse purse = new Purse(5);
-		Coin coin = new Coin(10);
+		Coin coin = new Coin(10,"Baht");
 		assertTrue( purse.insert(coin) );
 		assertTrue( purse.insert(coin) ); // should be allowed
 		assertTrue( purse.insert(coin) ); // should be allowed
@@ -132,7 +132,7 @@ public class PurseTest {
 		Purse purse = new Purse(10);
 		int [] values = {1, 10, 1000};
 		for(int value : values){
-			Valuable valuable = new Coin(value);
+			Valuable valuable = new Coin(value,"Baht");
 			assertTrue(purse.insert(valuable));
 			assertEquals(value,  purse.getBalance(), TOL);
 			Valuable [] result = purse.withdraw(value);
@@ -148,7 +148,7 @@ public class PurseTest {
 		Purse purse = new Purse(10);
 		int [] values = {50, 100, 1000};
 		for(int value : values){
-			Valuable valuable = new BankNote(value);
+			Valuable valuable = new BankNote(value,"Baht",1000000);
 			assertTrue(purse.insert(valuable));
 			assertEquals(value,  purse.getBalance(), TOL);
 			Valuable [] result = purse.withdraw(value);
@@ -167,10 +167,10 @@ public class PurseTest {
 		double amount1 = 0;
 		double amount2 = 0;
 		for(int k=1; k<10; k=k+2)  {
-			assertTrue( purse.insert( new Coin(value)) );
+			assertTrue( purse.insert( new Coin(value,"Baht")) );
 			amount1 += value;
 			value = 2*value;
-			assertTrue( purse.insert( new Coin(value)) );
+			assertTrue( purse.insert( new Coin(value,"Baht")) );
 			amount2 += value;
 			value = 2*value;
 		}
@@ -187,20 +187,20 @@ public class PurseTest {
 	public void testImpossibleWithdraw() {
 		Purse purse = new Purse(10);
 		assertNull( purse.withdraw(1) );
-		purse.insert( new Coin(20) );
+		purse.insert( new Coin(20,"Baht") );
 		assertNull( purse.withdraw(1) );
 		assertNull( purse.withdraw(19) );
 		assertNull( purse.withdraw(21) );
-		purse.insert( new Coin(20) );
+		purse.insert( new Coin(20,"Baht") );
 		assertNull( purse.withdraw(30) );
 	}
 	
 	@Test
 	public void testGetBalance() {
 		Purse purse = new Purse(3);
-    	BankNote banknote2 = new BankNote(500);
-    	BankNote banknote3 = new BankNote(20);
-    	Coin coin4 = new Coin(5);
+    	BankNote banknote2 = new BankNote(500,"Baht",1000000);
+    	BankNote banknote3 = new BankNote(20,"Baht",1000000);
+    	Coin coin4 = new Coin(5,"Baht");
         assertTrue(purse.insert(banknote2));
     	assertTrue(purse.insert(banknote3));
     	assertTrue(purse.insert(coin4));
